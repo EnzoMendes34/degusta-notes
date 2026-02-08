@@ -1,5 +1,3 @@
-export const dynamic = "force-dynamic";
-
 import { headers } from "next/headers";
 import { auth } from "@/src/lib/auth";
 import { redirect } from "next/navigation";
