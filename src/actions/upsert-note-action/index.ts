@@ -36,6 +36,7 @@ export const upsertNote = actionClient
           ...parsedInput,
           updatedAt: new Date(),
           alcohol: alcohol,
+          currency: parsedInput.currency,
         },
       });
 
