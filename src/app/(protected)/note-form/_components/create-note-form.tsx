@@ -61,24 +61,22 @@ interface WineFormData {
 
 const formSchema = z.object({
   wineName: z.string().min(1, { message: "Nome do vinho é obrigatório" }),
-  vintage: z.coerce.number().min(1, { message: "Safra é obrigatório" }),
-  grapes: z.string().min(1, { message: "Uva é obrigatória" }),
-  wineType: z.string().min(3, { message: "Tipo do vinho é obrigatório" }),
+  vintage: z.string().refine((val) => val === "N/S" || /^\d{4}$/.test(val), {
+    message: "Digite um valor válido (YYYY | N/S)",
+  }),
+  grapes: z.string(),
+  wineType: z.string(),
   country: z
     .string()
     .min(1, { message: "País/Região de produção é obrigatório" }),
   producer: z.string().min(1, { message: "Produtor é obrigatório" }),
-  currency: z.string().min(1, { message: "Campo de moeda é obrigatório!" }),
-  priceInCents: z.coerce
-    .number()
-    .min(1, { message: "Preço do vinho é obrigatório" }),
+  currency: z.string(),
+  priceInCents: z.coerce.number(),
   alcohol: z.coerce
     .number()
     .min(1, { message: "Teor de álcool é obrigatório" })
     .max(40, { message: "Teor não pode ultrapassar 40%" }),
-  tastingLocation: z
-    .string()
-    .min(1, { message: "Local de prova é obrigatório" }),
+  tastingLocation: z.string(),
   score: z.coerce
     .number()
     .min(1, { message: "A pontuação deve ser maior que um" })
@@ -98,8 +96,8 @@ export default function NoteForm({ note, onSuccess, userId }: NoteFormProps) {
     resolver: zodResolver(formSchema),
     defaultValues: {
       wineName: note?.wineName ?? "",
-      vintage: note?.vintage ?? 0,
-      alcohol: Number(note?.alcohol) ?? 0,
+      vintage: note?.vintage ?? "N/S",
+      alcohol: note?.alcohol ?? 0,
       country: note?.country ?? "",
       currency: note?.currency ?? "",
       grapes: note?.grapes ?? "",
@@ -115,6 +113,7 @@ export default function NoteForm({ note, onSuccess, userId }: NoteFormProps) {
   const upsertNoteAction = useAction(upsertNote, {
     onSuccess: () => {
       toast.success("Nota salva com sucesso"), onSuccess?.();
+      form.reset();
     },
     onError: () => {
       toast.error("Erro ao salvar a nota, tente novamente");
@@ -125,7 +124,7 @@ export default function NoteForm({ note, onSuccess, userId }: NoteFormProps) {
     upsertNoteAction.execute({
       ...values,
       noteId: note?.noteId,
-      priceInCents: values.priceInCents * 100,
+      priceInCents: values.priceInCents,
     });
   }
 
@@ -164,12 +163,7 @@ export default function NoteForm({ note, onSuccess, userId }: NoteFormProps) {
                 <FormItem>
                   <FormLabel>Safra</FormLabel>
                   <FormControl>
-                    <Input
-                      type="number"
-                      placeholder="1995"
-                      {...field}
-                      value={Number(field.value ?? 0)}
-                    />
+                    <Input placeholder="N/S" {...field} />
                   </FormControl>
                   <FormMessage />
                 </FormItem>
@@ -387,7 +381,7 @@ export default function NoteForm({ note, onSuccess, userId }: NoteFormProps) {
                 </FormLabel>
                 <FormControl>
                   <Textarea
-                    placeholder="Domaine de la Romanée-Conti"
+                    placeholder="À primeira vista, apresenta coloração rubi profunda e brilhante, com reflexos violáceos que revelam juventude e excelente concentração..."
                     {...field}
                   />
                 </FormControl>

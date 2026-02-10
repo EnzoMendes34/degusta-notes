@@ -3,7 +3,7 @@ import z from "zod";
 export const upsertNoteSchema = z.object({
   noteId: z.string().optional(),
   wineName: z.string().min(1, { message: "Nome do vinho é obrigatório" }),
-  vintage: z.number().min(1, { message: "Safra é obrigatório" }),
+  vintage: z.string().min(1, { message: "Safra é obrigatório" }),
   grapes: z.string().min(1, { message: "Uva é obrigatória" }),
   wineType: z.string().min(3, { message: "Tipo do vinho é obrigatório" }),
   country: z

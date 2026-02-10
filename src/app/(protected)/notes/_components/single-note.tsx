@@ -26,12 +26,14 @@ export function SingleNote({ note }: SingleNoteProps) {
     "p-4 border-2 border-rose-950 rounded-lg text-rose-950",
     "",
   );
-  const footerClasses = clsx("my-2");
+  const footerClasses = clsx("my-2 text-muted-foreground");
   return (
     <>
       <div className="border-2 border-zinc-300 rounded-sm p-8">
         <div className=" grid grid-cols-1 md:grid-cols-2 gap-4">
-          <div className={titleClasses}>{note.wineName}</div>
+          <div className={titleClasses}>
+            {`${note.wineName} (${note.vintage})`}
+          </div>
           <div className="gap-2 flex justify-end">
             <Dialog>
               <AlertDialog open={isOpen} onOpenChange={setIsOpen}>
@@ -48,7 +50,7 @@ export function SingleNote({ note }: SingleNoteProps) {
         </div>
         <div className={annotationClasses}>{note.annotations}</div>
         <div className={footerClasses}>
-          {`nota:${note.score}/100 ● Àlcool: ${note.alcohol}% ● ${note.currency} ${formatCurrencyInCents(note.priceInCents)} ● ${note.producer} ● ${formatDateTime(note.createdAt.toISOString())}`}
+          {`Nota: ${note.score}/100 ● Álcool: ${note.alcohol}% ● ${note.currency} ${formatCurrencyInCents(note.priceInCents)} ● ${note.producer} ● ${formatDateTime(note.createdAt.toISOString())}`}
         </div>
       </div>
     </>

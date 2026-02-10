@@ -20,7 +20,6 @@ export default async function NotesPage({ searchParams }: NotesPageProps) {
   }
   return (
     <>
-      <SearchInput />
       <NoteList userId={session?.user.id} search={searchParams.q} />
     </>
   );
