@@ -1,6 +1,6 @@
 import { db } from "@/src/db";
 import { notesTable } from "@/src/db/schema";
-import { eq } from "drizzle-orm";
+import { eq, desc } from "drizzle-orm";
 import { SingleNote } from "./single-note";
 import { redirect } from "next/navigation";
 
@@ -12,6 +12,7 @@ type NotesListProps = {
 export async function NoteList({ userId, search }: NotesListProps) {
   const notes = await db.query.notesTable.findMany({
     where: eq(notesTable.userId, userId),
+    orderBy: desc(notesTable.createdAt),
   });
 
   if (notes.length < 1) {

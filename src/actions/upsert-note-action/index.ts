@@ -25,6 +25,7 @@ export const upsertNote = actionClient
       .insert(notesTable)
       .values({
         ...parsedInput,
+
         userId: session.user.id,
         alcohol: alcohol,
         createdAt: new Date(),

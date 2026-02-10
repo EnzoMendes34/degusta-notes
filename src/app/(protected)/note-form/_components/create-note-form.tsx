@@ -13,7 +13,6 @@ import {
 import { Textarea } from "@/src/components/ui/textarea";
 import { notesTable } from "@/src/db/schema";
 import { zodResolver } from "@hookform/resolvers/zod";
-import React from "react";
 
 import { useState } from "react";
 import { useForm } from "react-hook-form";
@@ -44,44 +43,29 @@ const currencies = [
   { value: "€", label: "€" },
 ];
 
-interface WineFormData {
-  wineName: string;
-  vintage: string;
-  alcohol: string;
-  grapes: string;
-  wineType: string;
-  country: string;
-  producer: string;
-  currency: string;
-  price: string;
-  score: string;
-  tastingPlace: string;
-  annotations: string;
-}
-
 const formSchema = z.object({
   wineName: z.string().min(1, { message: "Nome do vinho é obrigatório" }),
   vintage: z.string().refine((val) => val === "N/S" || /^\d{4}$/.test(val), {
     message: "Digite um valor válido (YYYY | N/S)",
   }),
-  grapes: z.string(),
-  wineType: z.string(),
+  grapes: z.string().default(""),
+  wineType: z.string().default(""),
   country: z
     .string()
     .min(1, { message: "País/Região de produção é obrigatório" }),
   producer: z.string().min(1, { message: "Produtor é obrigatório" }),
-  currency: z.string(),
-  priceInCents: z.coerce.number(),
+  currency: z.string().default(""),
+  priceInCents: z.coerce.number().default(0),
   alcohol: z.coerce
     .number()
-    .min(1, { message: "Teor de álcool é obrigatório" })
-    .max(40, { message: "Teor não pode ultrapassar 40%" }),
-  tastingLocation: z.string(),
+    .max(40, { message: "Teor não pode ultrapassar 40%" })
+    .default(0),
+  tastingLocation: z.string().default(""),
   score: z.coerce
     .number()
-    .min(1, { message: "A pontuação deve ser maior que um" })
-    .max(100, { message: "A pontuação não pode ser maior do que 100" }),
-  annotations: z.string(),
+    .max(100, { message: "A pontuação não pode ser maior do que 100" })
+    .default(0),
+  annotations: z.string().default(""),
 });
 
 type NoteFormProps = {
@@ -115,7 +99,7 @@ export default function NoteForm({ note, onSuccess, userId }: NoteFormProps) {
       toast.success("Nota salva com sucesso"), onSuccess?.();
       form.reset();
     },
-    onError: () => {
+    onError: (e) => {
       toast.error("Erro ao salvar a nota, tente novamente");
     },
   });
@@ -124,7 +108,9 @@ export default function NoteForm({ note, onSuccess, userId }: NoteFormProps) {
     upsertNoteAction.execute({
       ...values,
       noteId: note?.noteId,
-      priceInCents: values.priceInCents,
+      priceInCents: values.priceInCents ?? 0,
+      alcohol: values.alcohol ?? 0,
+      score: values.score ?? 0,
     });
   }
 
@@ -381,7 +367,7 @@ export default function NoteForm({ note, onSuccess, userId }: NoteFormProps) {
                 </FormLabel>
                 <FormControl>
                   <Textarea
-                    placeholder="À primeira vista, apresenta coloração rubi profunda e brilhante, com reflexos violáceos que revelam juventude e excelente concentração..."
+                    placeholder="Ex: Rubi profundo, frutas negras, grafite; taninos finos. acidez média+; 92 pts agora, potencial 3-5 anos;"
                     {...field}
                   />
                 </FormControl>
