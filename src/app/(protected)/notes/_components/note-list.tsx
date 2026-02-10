@@ -9,7 +9,7 @@ type NotesListProps = {
   search?: string;
 };
 
-export async function NoteList({ userId, search }: NotesListProps) {
+export async function NoteList({ userId }: NotesListProps) {
   const notes = await db.query.notesTable.findMany({
     where: eq(notesTable.userId, userId),
     orderBy: desc(notesTable.createdAt),
@@ -21,8 +21,8 @@ export async function NoteList({ userId, search }: NotesListProps) {
   return (
     <>
       {notes.map((note) => (
-        <div className="my-8">
-          <SingleNote key={note.noteId} note={note} />
+        <div key={note.noteId} className="my-8">
+          <SingleNote note={note} />
         </div>
       ))}
     </>

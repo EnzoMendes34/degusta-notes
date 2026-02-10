@@ -25,7 +25,7 @@ export const upsertNote = actionClient
       .insert(notesTable)
       .values({
         ...parsedInput,
-
+        priceInCents: parsedInput.priceInCents,
         userId: session.user.id,
         alcohol: alcohol,
         createdAt: new Date(),

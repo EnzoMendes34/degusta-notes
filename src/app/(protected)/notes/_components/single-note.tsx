@@ -15,7 +15,8 @@ type SingleNoteProps = {
 };
 
 export function SingleNote({ note }: SingleNoteProps) {
-  const priceInCents = note.priceInCents ?? 0;
+  const price = note.priceInCents ?? 0;
+  const formattedPrice = formatCurrencyInCents(price);
   const [isOpen, setIsOpen] = useState(false);
   const [isEditOpen, setIsEditOpen] = useState(false);
   const titleClasses = clsx("text-xl font-bold");
@@ -47,7 +48,7 @@ export function SingleNote({ note }: SingleNoteProps) {
         </div>
         <div className={annotationClasses}>{note.annotations}</div>
         <div className={footerClasses}>
-          {`Nota: ${note.score}/100 | Álcool: ${note.alcohol}% | ${note.currency} ${formatCurrencyInCents(priceInCents)} | ${note.producer} | ${formatDateTime(note.createdAt.toISOString())}`}
+          {`Nota: ${note.score}/100 | Álcool: ${note.alcohol}% | ${note.currency} ${formattedPrice} | ${note.producer} | ${formatDateTime(note.createdAt.toISOString())}`}
         </div>
       </div>
     </>

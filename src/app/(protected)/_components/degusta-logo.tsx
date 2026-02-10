@@ -8,7 +8,7 @@ export function DegustaLogo() {
     <>
       <div className="flex items-center gap-2">
         <WineIcon className={iconClasses} />
-        <p>
+        <p className="font-bold">
           Degusta <span className={logoClasses}>notes</span>
         </p>
       </div>

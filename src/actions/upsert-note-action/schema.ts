@@ -11,7 +11,7 @@ export const upsertNoteSchema = z.object({
     .min(1, { message: "País/Região de produção é obrigatório" }),
   producer: z.string().min(1, { message: "Produtor é obrigatório" }),
   currency: z.string().default(""),
-  priceInCents: z.number().default(0),
+  priceInCents: z.number().min(1, { message: "Preço é obrigatório." }),
   alcohol: z
     .number()
     .max(40, { message: "Teor não pode ultrapassar 40%" })
