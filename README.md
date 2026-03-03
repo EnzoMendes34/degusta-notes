@@ -1,36 +1,93 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
 
-## Getting Started
+# 🍷 Degusta Notes
 
-First, run the development server:
+<p>
+  <img src="https://img.shields.io/badge/Next.js-000000?style=for-the-badge&logo=nextdotjs&logoColor=white"/>
+  <img src="https://img.shields.io/badge/TypeScript-007ACC?style=for-the-badge&logo=typescript&logoColor=white"/>
+  <img src="https://img.shields.io/badge/Tailwind_CSS-38B2AC?style=for-the-badge&logo=tailwind-css&logoColor=white"/>
+  <img src="https://img.shields.io/badge/PostgreSQL-316192?style=for-the-badge&logo=postgresql&logoColor=white"/>
+  <img src="https://img.shields.io/badge/Drizzle-C5F74F?style=for-the-badge&logo=drizzle&logoColor=black"/>
+  <img src="https://img.shields.io/badge/Vercel-000000?style=for-the-badge&logo=vercel&logoColor=white"/>
+</p>
+
+Aplicação web para Sommeliers registrarem, organizarem e consultarem suas notas de degustação de vinhos.
+
+🔗 **[Acesse o projeto ao vivo](https://degusta-notes.vercel.app)**
+
+---
+
+## 📋 Funcionalidades
+
+- ✅ Autenticação de usuário
+- ✅ Criar notas de degustação
+- ✅ Editar notas existentes
+- ✅ Deletar notas
+- ✅ Interface moderna e responsiva com **shadcn/ui**
+
+---
+
+## 🛠️ Tecnologias
+
+| Tecnologia | Descrição |
+|------------|-----------|
+| Next.js | Framework React fullstack |
+| TypeScript | Tipagem estática |
+| Tailwind CSS | Estilização |
+| shadcn/ui | Componentes de UI |
+| Drizzle ORM | ORM para acesso ao banco |
+| PostgreSQL | Banco de dados relacional |
+| Vercel | Deploy e hospedagem |
+
+---
+
+## ⚙️ Como rodar o projeto
+
+### Pré-requisitos
+
+- Node.js 18+
+- PostgreSQL rodando localmente ou uma instância na nuvem (ex: Neon, Supabase)
+
+### Passo a passo
 
 ```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+# Clone o repositório
+git clone https://github.com/EnzoMendes34/degusta-notes.git
+
+# Entre na pasta
+cd degusta-notes
+
+# Instale as dependências
+npm install
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+Configure as variáveis de ambiente criando um arquivo `.env.local` na raiz do projeto:
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+```env
+DATABASE_URL=postgresql://usuario:senha@localhost:5432/degusta_notes
+```
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+```bash
+# Rode as migrations do banco
+npx drizzle-kit migrate
 
-## Learn More
+# Inicie o servidor de desenvolvimento
+npm run dev
+```
 
-To learn more about Next.js, take a look at the following resources:
+A aplicação estará disponível em `http://localhost:3000`
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+---
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+## 🚀 Deploy
 
-## Deploy on Vercel
+O projeto está deployado na **Vercel** e pode ser acessado em:
+**[https://degusta-notes.vercel.app](https://degusta-notes.vercel.app)**
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+---
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+## 👨‍💻 Autor
+
+Feito por **Enzo Mendes**
+
+[![LinkedIn](https://img.shields.io/badge/LinkedIn-0077B5?style=for-the-badge&logo=linkedin&logoColor=white)](https://www.linkedin.com/in/enzo-mendes-49896b285)
+[![GitHub](https://img.shields.io/badge/GitHub-100000?style=for-the-badge&logo=github&logoColor=white)](https://github.com/EnzoMendes34)
